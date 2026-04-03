@@ -73,46 +73,29 @@ structures::ArrayQueue<T>::~ArrayQueue() {
     delete [] contents;
 }
 
-/*template<typename T>
-void structures::ArrayStack<T>::push(const T& data) {
-    //! metodo empilha
-    if (full()) {
-        throw std::out_of_range("pilha cheia");
-    } else {
-        top_++;
-        contents[top_] = data;
-    }
-}
-
-template<typename T>
-T structures::ArrayStack<T>::pop() {
-    //! metodo desempilha
-    if (!empty()) {
-        T top_value = contents[top_];
-        top_--;
-        return top_value;
-    } else {
-        throw std::out_of_range("pilha vazia");
-    }
-}
-    */
-
 //! metodo enfileirar
 template<typename T>
 void structures::ArrayQueue<T>::enqueue(const T& data) {
     if (full()) {
         throw std::out_of_range("fila cheia");
     } else {
-        size_++; 
         end_ = (end_ + 1) % max_size_;
         contents[end_] = data;
+        size_++;
     }
 }
 
 //! metodo desenfileirar
 template<typename T>
 T structures::ArrayQueue<T>::dequeue() {
-    // COLOQUE SEU CODIGO AQUI...
+     if (empty()) {
+        throw std::out_of_range("fila vazia");
+    } else {
+        T aux = contents[begin_];
+        begin_ = (begin_ + 1) % max_size_;
+        size_--;
+        return aux;
+    }
 }
 
 //! metodo retorna o ultimo
@@ -120,27 +103,31 @@ template<typename T>
 T& structures::ArrayQueue<T>::back() {
     if (!empty()) {
         return contents[end_];
+    } else {
+        throw std::out_of_range("fila vazia");
     }
 }
 
 //! metodo limpa a fila
 template<typename T>
 void structures::ArrayQueue<T>::clear() {
-    for (int i = begin_; i < end_; i++) {
-
+    if (!empty()) {
+        begin_ = 0;
+        end_ = -1;
+        size_ = 0;
     }
 }
 
 //! metodo retorna tamanho atual
 template<typename T>
 std::size_t structures::ArrayQueue<T>::size() {
-    return begin_ - end_
+    return size_;
 }
 
 //! metodo retorna tamanho maximo
 template<typename T>
 std::size_t structures::ArrayQueue<T>::max_size() {
-    return max_size_; 
+    return max_size_;
 }
 
 //! metodo verifica se vazio
@@ -152,6 +139,5 @@ bool structures::ArrayQueue<T>::empty() {
 //! metodo verifica se esta cheio
 template<typename T>
 bool structures::ArrayQueue<T>::full() {
-    // a fila vai estar cheia se tamanho = maior tamanho
-    return size_ == max_size;
+    return size_ == max_size_;
 }

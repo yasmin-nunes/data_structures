@@ -27,13 +27,19 @@ class Aluno {
 Aluno *turma_filtra(Aluno t[], int N, int menor_matr) {
     Aluno *tf;
     tf = nullptr;  // retirar e alocar (com new)
-    int matr;
-    matr = t[i].devolveMatricula();
-
+    int count = 0;
     for (int i = 0; i < N; i++) {
-        matr = t[i].devolveMatricula();
-        if (matr > menor_matr) {
-            tf[i] = t[i];
+        if (t[i].devolveMatricula() >= menor_matr) {
+            count++;
+        }
+    }
+
+    tf = new Aluno[count];
+
+    int j = 0;
+    for (int i = 0; i < N; i++) {
+        if (t[i].devolveMatricula() >= menor_matr) {
+            tf[j++] = t[i];
         }
     }
 
@@ -44,12 +50,11 @@ int *turma_conta(Aluno t[], int N) {
     int *c;
     c = new int[26]();
     char letra;
-
     for (int i = 0; i < N; i++) {
         letra = t[i].devolveNome()[0];
         int pos = letra - 'A';
         c[pos]++;
-    }
+        }
 
     return c;
 }
@@ -57,21 +62,31 @@ int *turma_conta(Aluno t[], int N) {
 
 Aluno **grupos_por_iniciais(Aluno t[], int N) {
     Aluno **g;
-    g = new Aluno*[26];  // vetor de ponteiros;
-                         // cada posição aponta para um vetor de alunos;
-                         // g deve ser alocado com o seguinte:
-                         //   g[0] é um ponteiro para alunos com letra 'A'
-                         //   g[1] é um ponteiro para alunos com letra 'B'
-                         //   ...
-                         //   g[25] é um ponteiro para alunos com letra 'Z'
+    g = new Aluno *[26];
 
-    // DICA: utilize a função 'turma_conta' (implementada no execício 5) para
-    //       definir o tamanho de cada um dos 26 vetores
-    // int *c = turma_conta(t, N);
+    int *c = turma_conta(t, N);
 
+    for (int i = 0; i < 26; i++) {
+        if (c[i] > 0) {
+            g[i] = new Aluno[c[i]];
+        } else {
+            g[i] = nullptr;
+            }
+        }
 
+    int posicoes[26] = {0};
 
-    return g;
+    for (int i = 0; i < N; i++) {
+        char letra = t[i].devolveNome()[0];
+        int pos = letra - 'A';
+        if (g[pos] != nullptr) {
+            g[pos][posicoes[pos]++] = t[i];
+        }
+    }
+
+  delete[] c;
+
+  return g;
 }
 
 
@@ -82,3 +97,4 @@ Aluno **grupos_por_iniciais(Aluno t[], int N) {
     A função 'main()' não deve ser escrita aqui, pois é parte do código dos testes e já está implementada
 
 */
+

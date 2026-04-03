@@ -1,4 +1,4 @@
-// Copyright [2022] <COLOQUE SEU NOME AQUI...>
+// Copyright [2022] <YASMIN AVILA NUNES>
 #include <string>
 
 
@@ -33,14 +33,12 @@ vetor t alocado de saida: [{'Fulano',1010}, {'Beltrano',2020}, {'Ciclano':3030}]
 
 Aluno *turma(std::string nomes[], int matriculas[], int N) {
     Aluno *t;
-
     t = new Aluno[N];
 
     for (int i = 0; i < N; i++) {
-        t[i].nome = nomes[i];
-        t[i].matricula = matriculas[i];
+        t[i].escreveNome(nomes[i]);
+        t[i].escreveMatricula(matriculas[i]);
     }
-
     return t;
 }
 
@@ -52,7 +50,7 @@ tu de saída: [{'Fulano',1010}, {'Beltrano',2020}, {'Fulana',7070}, {'Beltrana',
 */
 Aluno *turmas_uniao(Aluno t1[], Aluno t2[], int N1, int N2) {
     Aluno *tu;
-    Aluno *tu = new Aluno[N1 + N2];
+    tu = new Aluno[N1 + N2];
 
     for (int i = 0; i < N1; i++) {
         tu[i] = t1[i];
@@ -61,6 +59,7 @@ Aluno *turmas_uniao(Aluno t1[], Aluno t2[], int N1, int N2) {
     for (int i = 0; i < N2; i++) {
         tu[N1 + i] = t2[i];
     }
+
     return tu;
 }
 
@@ -82,10 +81,6 @@ void turmas_divisao(Aluno t[], int k, int N, Aluno **pt1, Aluno **pt2) {
     for (int i = 0; i < N - k; i++) {
         t2[i] = t[k + i];
     }
-
-    *pt1 = t1;
-    *pt2 = t2;
-
     *pt1 = t1;
     *pt2 = t2;
 }

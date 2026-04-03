@@ -1,4 +1,4 @@
-// Copyright [ano] <COLOQUE SEU NOME AQUI...>
+// Copyright [2026] <YASMIN AVILA NUNES>
 #ifndef STRUCTURES_ARRAY_STACK_H
 #define STRUCTURES_ARRAY_STACK_H
 
@@ -51,7 +51,7 @@ template<typename T>
 structures::ArrayStack<T>::ArrayStack() {
     max_size_ = DEFAULT_SIZE;
     contents = new T[max_size_];
-    top_ = -1; // top_ --> serve para guardar os índices do elemento no topo
+    top_ = -1;
 }
 
 template<typename T>
@@ -68,44 +68,71 @@ structures::ArrayStack<T>::~ArrayStack() {
 
 template<typename T>
 void structures::ArrayStack<T>::push(const T& data) {
+    //! metodo empilha
     if (full()) {
         throw std::out_of_range("pilha cheia");
     } else {
-        top() = top() + 1
+        top_++;
+        contents[top_] = data;
     }
 }
 
 template<typename T>
 T structures::ArrayStack<T>::pop() {
-    // COLOQUE SEU CODIGO AQUI...
+    //! metodo desempilha
+    if (!empty()) {
+        T top_value = contents[top_];
+        top_--;
+        return top_value;
+    } else {
+        throw std::out_of_range("pilha vazia");
+    }
 }
 
 template<typename T>
 T& structures::ArrayStack<T>::top() {
-    // COLOQUE SEU CODIGO AQUI...
+    //! metodo retorna o topo
+    if (empty()) {
+        throw std::out_of_range("pilha vazia");
+    } else {
+        return contents[top_];
+    }
 }
 
 template<typename T>
 void structures::ArrayStack<T>::clear() {
-    // COLOQUE SEU CODIGO AQUI...
+    //! metodo limpa pilha
+        top_ = -1;
 }
 
 template<typename T>
 std::size_t structures::ArrayStack<T>::size() {
-    // COLOQUE SEU CODIGO AQUI...
+    //! metodo retorna tamanho
+    std::size_t size_value;
+    size_value = static_cast<std::size_t> (top_+1);
+    return size_value;
 }
 
 template<typename T>
 std::size_t structures::ArrayStack<T>::max_size() {
-    // COLOQUE SEU CODIGO AQUI...
+    //! metodo retorna capacidade maxima
+    return max_size_;
 }
 
 template<typename T>
 bool structures::ArrayStack<T>::empty() {
-    // COLOQUE SEU CODIGO AQUI...
+    //! verifica se esta vazia
+    return top_ == -1;
 }
 
 template<typename T>
 bool structures::ArrayStack<T>::full() {
-    // COLOQUE SEU CODIGO AQUI...
+    //! verifica se esta cheia
+    std::size_t size;
+    size = static_cast<std::size_t> (top_+1);
+    if (size == max_size_) {
+        return true;
+    } else {
+        return false;
+    }
 }
