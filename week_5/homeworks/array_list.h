@@ -103,7 +103,6 @@ void structures::ArrayList<T>::insert(const T& data, std::size_t index) {
 
 template<typename T>
 void structures::ArrayList<T>::insert_sorted(const T& data) {
-    // COLOQUE SEU CODIGO AQUI...
     if (full()) {
         throw std::out_of_range("Lista cheia");
     }
